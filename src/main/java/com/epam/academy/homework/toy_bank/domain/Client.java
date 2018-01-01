@@ -12,17 +12,39 @@ public class Client {
     @OneToOne
     private
     Person person;
-    private BigDecimal balance;
+    private BigDecimal amountLentByBank;
+    private BigDecimal amountLentToBank;
+    private BigDecimal amountDeposited;
     @Id
     @GeneratedValue
     private int id;
 
-    public BigDecimal getBalance() {
-        return balance;
+    public BigDecimal getAmountDeposited() {
+        return amountDeposited;
     }
 
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
+    public void setAmountDeposited(BigDecimal amountDeposited) {
+        this.amountDeposited = amountDeposited;
+    }
+
+    public BigDecimal getLiquidBalance() {
+        return amountDeposited.add(amountLentByBank);
+    }
+
+    public BigDecimal getAmountLentByBank() {
+        return amountLentByBank;
+    }
+
+    public void setAmountLentByBank(BigDecimal amountLentByBank) {
+        this.amountLentByBank = amountLentByBank;
+    }
+
+    public BigDecimal getAmountLentToBank() {
+        return amountLentToBank;
+    }
+
+    public void setAmountLentToBank(BigDecimal amountLentToBank) {
+        this.amountLentToBank = amountLentToBank;
     }
 
     public int getId() {

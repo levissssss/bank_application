@@ -16,7 +16,7 @@ public class Bank {
     private BigDecimal vaultBalance;
 
     @OneToMany
-    private List<Ledger> ledgers;
+    private List<Client> clients;
 
     private BigDecimal lendingInterest;
     private BigDecimal depositInterest;
@@ -29,12 +29,12 @@ public class Bank {
         this.id = id;
     }
 
-    public List<Ledger> getLedgers() {
-        return ledgers;
+    public List<Client> getClients() {
+        return clients;
     }
 
-    public void setLedgers(List<Ledger> ledgers) {
-        this.ledgers = ledgers;
+    public void setClients(List<Client> clients) {
+        this.clients = clients;
     }
 
     public BigDecimal getVaultBalance() {
