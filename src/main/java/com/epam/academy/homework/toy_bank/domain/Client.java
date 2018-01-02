@@ -10,11 +10,10 @@ import java.math.BigDecimal;
 public class Client {
 
     @OneToOne
-    private
-    Person person;
-    private BigDecimal amountLentByBank;
-    private BigDecimal amountLentToBank;
-    private BigDecimal amountDeposited;
+    private Person person;
+    private BigDecimal amountLentByBank = BigDecimal.valueOf(0);
+    private BigDecimal amountLentToBank = BigDecimal.valueOf(0);
+    private BigDecimal amountDeposited = BigDecimal.valueOf(0);
     @Id
     @GeneratedValue
     private int id;
@@ -27,9 +26,6 @@ public class Client {
         this.amountDeposited = amountDeposited;
     }
 
-    public BigDecimal getLiquidBalance() {
-        return amountDeposited.add(amountLentByBank);
-    }
 
     public BigDecimal getAmountLentByBank() {
         return amountLentByBank;
@@ -62,4 +58,5 @@ public class Client {
     public void setPerson(Person person) {
         this.person = person;
     }
+
 }

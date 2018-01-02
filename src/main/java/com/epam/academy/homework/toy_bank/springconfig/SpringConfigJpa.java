@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class SpringConfigJpa {
 
     @Bean
-    private LocalEntityManagerFactoryBean entityManagerFactory() {
+    public LocalEntityManagerFactoryBean entityManagerFactory() {
         LocalEntityManagerFactoryBean emf = new LocalEntityManagerFactoryBean();
         emf.setPersistenceUnitName("pu");
         return emf;

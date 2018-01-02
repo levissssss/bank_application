@@ -1,9 +1,6 @@
 package com.epam.academy.homework.toy_bank.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -13,12 +10,14 @@ public class Bank {
     @GeneratedValue
     private int id;
 
-    private BigDecimal vaultBalance;
+    private BigDecimal vaultBalance = BigDecimal.valueOf(0);
 
     @OneToMany
     private List<Client> clients;
 
+    @Column(precision = 10, scale = 4)
     private BigDecimal lendingInterest;
+    @Column(precision = 10, scale = 4)
     private BigDecimal depositInterest;
 
     public int getId() {
@@ -59,5 +58,9 @@ public class Bank {
 
     public void setDepositInterest(BigDecimal depositInterest) {
         this.depositInterest = depositInterest;
+    }
+
+    public void addClient(Client client) {
+        clients.add(client);
     }
 }
