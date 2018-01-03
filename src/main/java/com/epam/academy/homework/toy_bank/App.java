@@ -1,6 +1,6 @@
 package com.epam.academy.homework.toy_bank;
 
-import com.epam.academy.homework.toy_bank.dao.ClientDao;
+import com.epam.academy.homework.toy_bank.client.CommandLineClient;
 import com.epam.academy.homework.toy_bank.dao.PersonDao;
 import com.epam.academy.homework.toy_bank.service.BankingService;
 import com.epam.academy.homework.toy_bank.service.TransferService;
@@ -16,21 +16,24 @@ import java.time.LocalDate;
 public class App {
     private final BankingService bankingService;
     private final TransferService transferService;
-    private final ClientDao clientDao;
     private final PersonDao personDao;
+    private final CommandLineClient client;
     private App() {
         ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfigJpa.class, SpringConfigDao.class, SpringConfigService.class);
         bankingService = context.getBean(BankingService.class);
         transferService = context.getBean(TransferService.class);
-        clientDao = context.getBean(ClientDao.class);
         personDao = context.getBean(PersonDao.class);
+        client = context.getBean(CommandLineClient.class);
     }
 
     public static void main(String args[]) {
         App app = new App();
-        app.homeworkExample();
+        //app.homeworkExample();
+        app.startClient();
     }
-
+    private void startClient(){
+        client.startConsole();
+    }
     private void homeworkExample() {
         //The lending rate is 0.1% per day, the borrowing is 0.2% per day.
         bankingService.setInterestRates(BigDecimal.valueOf(0.002), BigDecimal.valueOf(0.001));
