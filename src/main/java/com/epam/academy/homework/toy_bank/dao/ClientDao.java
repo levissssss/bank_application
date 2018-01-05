@@ -14,9 +14,15 @@ public interface ClientDao {
     Client findByDetails(Person toSearch);
     List<Client> getAllClients();
 
-    boolean clientCanAfford(Client client, BigDecimal amount);
+    default boolean clientCanAfford(Client client, BigDecimal amount){
+        return client.getAmountDeposited().compareTo(amount) >= 0;
+    }
 
-    boolean clientHasBorrowedFromBank(Client client);
+    default boolean clientHasBorrowedFromBank(Client client){
+        return client.getAmountLentByBank().compareTo(BigDecimal.valueOf(0)) > 0;
+    }
 
-    boolean clientHasLentToBank(Client client);
+    default boolean clientHasLentToBank(Client client){
+        return client.getAmountLentToBank().compareTo(BigDecimal.valueOf(0)) > 0;
+    }
 }

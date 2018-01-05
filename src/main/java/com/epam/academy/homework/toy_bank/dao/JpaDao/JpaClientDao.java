@@ -4,7 +4,6 @@ import com.epam.academy.homework.toy_bank.dao.ClientDao;
 import com.epam.academy.homework.toy_bank.domain.Client;
 import com.epam.academy.homework.toy_bank.domain.Person;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class JpaClientDao extends GenericJpaDao implements ClientDao {
@@ -31,21 +30,6 @@ public class JpaClientDao extends GenericJpaDao implements ClientDao {
     @Override
     public List<Client> getAllClients() {
         return entityManager.createQuery("select c from Client c", Client.class).getResultList();
-    }
-
-    @Override
-    public boolean clientCanAfford(Client client, BigDecimal amount) {
-        return client.getAmountDeposited().compareTo(amount) >= 0;
-    }
-
-    @Override
-    public boolean clientHasBorrowedFromBank(Client client) {
-        return client.getAmountLentByBank().compareTo(BigDecimal.valueOf(0)) > 0;
-    }
-
-    @Override
-    public boolean clientHasLentToBank(Client client) {
-        return client.getAmountLentToBank().compareTo(BigDecimal.valueOf(0)) > 0;
     }
 
 }

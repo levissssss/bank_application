@@ -10,11 +10,19 @@ public interface BankDao {
     void makeBank(Bank bank);
     Bank getBank();
 
-    void addClient(Client client);
+    default void addClient(Client client){
+        getBank().addClient(client);
+    }
 
-    void putInVault(BigDecimal amount);
+    default void putInVault(BigDecimal amount){
+        getBank().setVaultBalance(getBank().getVaultBalance().add(amount));
+    }
 
-    void takeFromVault(BigDecimal amount);
+    default void takeFromVault(BigDecimal amount){
+        getBank().setVaultBalance(getBank().getVaultBalance().subtract(amount));
+    }
 
-    boolean bankCanAfford(BigDecimal amount);
+    default boolean bankCanAfford(BigDecimal amount){
+        return getBank().getVaultBalance().compareTo(amount) >= 0;
+    }
 }
