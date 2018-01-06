@@ -6,6 +6,8 @@ import com.epam.academy.homework.toy_bank.dao.PersonDao;
 import com.epam.academy.homework.toy_bank.domain.Bank;
 import com.epam.academy.homework.toy_bank.domain.Client;
 import com.epam.academy.homework.toy_bank.domain.Person;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -20,7 +22,7 @@ public class BankingService {
     private BankDao bankDao;
     private ClientDao clientDao;
     private PersonDao personDao;
-
+    private Logger log = LoggerFactory.getLogger(BankingService.class);
     @Autowired
     private PlatformTransactionManager platformTransactionManager;
 
@@ -96,10 +98,7 @@ public class BankingService {
     private void payClient(Bank bank, Client client) {
         if (clientDao.clientHasLentToBank(client)) {
             BigDecimal interest = calculateDepositInterest(bank, client);
-            if (bankDao.bankCanAfford(interest)) {
-                client.setAmountDeposited(client.getAmountLentToBank().add(interest));
-                bankDao.takeFromVault(interest);
-            }
+            client.setAmountLentToBank(client.getAmountLentToBank().add(interest));
         }
     }
 
@@ -107,4 +106,13 @@ public class BankingService {
         return client.getAmountLentToBank().multiply(bank.getDepositInterest());
     }
 
+    @Transactional
+    public void printStatus() {
+        log.warn("Bank:");
+        log.warn(bankDao.getBank().toString());
+        log.warn("Clients:");
+        for (Client client : clientDao.getAllClients()) {
+            log.warn(client.toString());
+        }
+    }
 }

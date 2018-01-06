@@ -5,24 +5,18 @@ import com.epam.academy.homework.toy_bank.dao.ClientDao;
 import com.epam.academy.homework.toy_bank.domain.Bank;
 import com.epam.academy.homework.toy_bank.domain.Client;
 import com.epam.academy.homework.toy_bank.domain.Person;
-import com.epam.academy.homework.toy_bank.springconfig.SpringConfigTest;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = SpringConfigTest.class)
 public class TransferServiceTest {
 
     @InjectMocks
@@ -51,11 +45,12 @@ public class TransferServiceTest {
         senderClient.setAmountDeposited(BigDecimal.valueOf(5000));
         Client receiverClient = new Client();
         BigDecimal amount = BigDecimal.valueOf(3000);
+
         //When
         when(clientDaoMock.findByDetails(sender)).thenReturn(senderClient);
         when(clientDaoMock.findByDetails(receiver)).thenReturn(receiverClient);
-        //when(clientDaoMock.clientCanAfford(senderClient, amount)).thenReturn(true);
         transferService.transferMoney(sender, receiver, amount);
+
         //Then
         verify(clientDaoMock).clientCanAfford(senderClient, amount);
         Assert.assertEquals(BigDecimal.valueOf(2000), senderClient.getAmountDeposited());
@@ -71,11 +66,12 @@ public class TransferServiceTest {
         senderClient.setAmountDeposited(BigDecimal.valueOf(2000));
         Client receiverClient = new Client();
         BigDecimal amount = BigDecimal.valueOf(3000);
+
         //When
         when(clientDaoMock.findByDetails(sender)).thenReturn(senderClient);
         when(clientDaoMock.findByDetails(receiver)).thenReturn(receiverClient);
-        //when(clientDaoMock.clientCanAfford(senderClient, amount)).thenReturn(false);
         transferService.transferMoney(sender, receiver, amount);
+
         //Then
         verify(clientDaoMock).clientCanAfford(senderClient, amount);
         Assert.assertEquals(BigDecimal.valueOf(2000), senderClient.getAmountDeposited());
@@ -91,10 +87,12 @@ public class TransferServiceTest {
         bank.setVaultBalance(BigDecimal.valueOf(10000));
         client.setAmountDeposited(BigDecimal.valueOf(5000));
         BigDecimal amount = BigDecimal.valueOf(3000);
+
         //When
         when(clientDaoMock.findByDetails(person)).thenReturn(client);
         when(bankDaoMock.getBank()).thenReturn(bank);
         transferService.retrieveCash(person, amount);
+
         //Then
         verify(clientDaoMock).clientCanAfford(client, amount);
         verify(bankDaoMock).bankCanAfford(amount);
@@ -111,10 +109,12 @@ public class TransferServiceTest {
         bank.setVaultBalance(BigDecimal.valueOf(10000));
         client.setAmountDeposited(BigDecimal.valueOf(2000));
         BigDecimal amount = BigDecimal.valueOf(3000);
+
         //When
         when(clientDaoMock.findByDetails(person)).thenReturn(client);
         when(bankDaoMock.getBank()).thenReturn(bank);
         transferService.retrieveCash(person, amount);
+
         //Then
         verify(clientDaoMock).clientCanAfford(client, amount);
         Assert.assertEquals(BigDecimal.valueOf(2000), client.getAmountDeposited());
@@ -130,10 +130,12 @@ public class TransferServiceTest {
         bank.setVaultBalance(BigDecimal.valueOf(2000));
         client.setAmountDeposited(BigDecimal.valueOf(5000));
         BigDecimal amount = BigDecimal.valueOf(3000);
+
         //When
         when(clientDaoMock.findByDetails(person)).thenReturn(client);
         when(bankDaoMock.getBank()).thenReturn(bank);
         transferService.retrieveCash(person, amount);
+
         //Then
         verify(bankDaoMock).bankCanAfford(amount);
         Assert.assertEquals(BigDecimal.valueOf(5000), client.getAmountDeposited());

@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 public class SpringConfigTestDB {
-
+    //TODO integration tests with in memory DB
     @Bean
     public LocalEntityManagerFactoryBean entityManagerFactory() {
         LocalEntityManagerFactoryBean emf = new LocalEntityManagerFactoryBean();
@@ -17,6 +17,10 @@ public class SpringConfigTestDB {
         return emf;
     }
 
+    //@Bean
+    //public DataSource dataSource(){
+    //    return new DriverManagerDataSource()
+    //}
     @Bean
     public JpaTransactionManager transactionManager() {
         return new JpaTransactionManager(entityManagerFactory().getObject());

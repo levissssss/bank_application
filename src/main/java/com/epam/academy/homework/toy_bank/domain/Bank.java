@@ -63,4 +63,15 @@ public class Bank {
     public void addClient(Client client) {
         clients.add(client);
     }
+
+    @Override
+    public String toString() {
+        return "Bank{" +
+                "id=" + id +
+                ", vaultBalance=" + vaultBalance +
+                ", clients=" + clients +
+                ", lendingInterest=" + lendingInterest +
+                ", depositInterest=" + depositInterest +
+                '}';
+    }
 }
